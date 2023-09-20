@@ -32,12 +32,13 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
-        Product existingProduct = productRepository.findById(id).orElse(null);
+    public Product updateProduct(Product updatedProduct) {
+        Product existingProduct = productRepository.findById(updatedProduct.getId()).orElse(null);
         if (existingProduct != null) {
             existingProduct.setName(updatedProduct.getName());
             return productRepository.save(existingProduct);
         }
+        logger.error("Could not find product associated with the sent updated product: " + updatedProduct);
         return null;
     }
 
@@ -47,6 +48,7 @@ public class ProductService {
             productRepository.delete(existingProduct);
             return true;
         }
+        logger.error("Could not delete product associated with the sent id: " + id + ". It was probably not found.");
         return false;
     }
 }

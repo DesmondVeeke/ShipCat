@@ -4,22 +4,21 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.List;
-
+@Entity
+@Table(name = "user_table")
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Getter
 @Setter
-
-public class Product {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Product requires a name")
-    private String name;
+    @NotBlank(message = "Username is required")
+    private String username;
 
-    @ManyToMany(mappedBy = "products")
-    private List<PackingSlip> packingSlips;
+    @NotBlank(message = "Password is required")
+    private String password;
+
 }
